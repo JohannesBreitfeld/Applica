@@ -4,21 +4,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Applica.Presentation"
+        xmlns:views="clr-namespace:Applica.Presentation.Views"
+        xmlns:viewmodels="clr-namespace:Applica.Presentation.ViewModels"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Applica" MinHeight="600" MinWidth="800" Height="600" Width="800"
+        Background="#121C2D">
     <Window.Resources>
-        <!--<DataTemplate DataType="{x:Type viewmodels:InventoryViewModel}">
-            <views:InventoryView/>
-        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+            <views:HomeView/>
+        </DataTemplate>
 
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
- 
-        <ContentControl Content="{Binding SelectedViewModel}" Grid.Row="1"/>
+
+        <Grid>
+            <Label Content="APPLICA" 
+                   Margin="15 0 0 0"
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Center"
+                   Foreground="#4DA7FF"
+                   FontSize="30"
+                   FontWeight="DemiBold"/>
+            <StackPanel Orientation="Horizontal" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Right"
+                        Margin="0 0 15 0">
+                <RadioButton Style="{StaticResource menuButton}"
+                             Tag="{StaticResource buttonText}">
+                    <StackPanel Orientation="Horizontal" >
+                        <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="Home" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+                
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1"/>
+        <Border CornerRadius="15" Grid.Column="1" Grid.Row="1" Background="#2A3546" Margin="15 0 15 15">
+            <!--<views:HomeView />-->
+            <ContentControl Content="{Binding SelectedViewModel}" />
+            </Border>
+    
     </Grid>
 </Window>

@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="Applica.Presentation.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Applica.Presentation.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+ 
+            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="#1C2638"
+                CornerRadius="15"
+                Margin="20"
+                Width="200"
+                Height="300">
+                    <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        Margin="25">
+                        <TextBlock Text="YOU HAVE APPLIED TO"
+                                   HorizontalAlignment="Center"
+                                   Foreground="#E1E8F0"
+                                   FontSize="24"
+                                   TextWrapping="Wrap"
+                                   FontWeight="SemiBold"
+                                   TextAlignment="Center"/>
+                        <TextBlock Text="0"
+                                   HorizontalAlignment="Center"
+                                   Foreground="#FFB74D"
+                                   TextWrapping="Wrap"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="COMPANIES"
+                                   HorizontalAlignment="Center"
+                                   Foreground="#E1E8F0"
+                                   FontSize="24"
+                                   TextWrapping="Wrap"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                </Border>
+                <Border Background="#1C2638"
+                CornerRadius="15"
+                Margin="20"
+                Width="200">
+                <StackPanel Orientation="Vertical"
+                            VerticalAlignment="Center"
+                            Margin="25">
+                    <TextBlock Text="YOU HAVE RECIEVED"
+                        HorizontalAlignment="Center"
+                        Foreground="#E1E8F0"
+                        FontSize="24"
+                        TextWrapping="Wrap"
+                        FontWeight="SemiBold"
+                        TextAlignment="Center"/>
+                    <TextBlock Text="0"
+                        HorizontalAlignment="Center"
+                        Foreground="#4CAF50"
+                        TextWrapping="Wrap"
+                        FontSize="24"
+                        FontWeight="Bold"/>
+                    <TextBlock Text="OFFERS"
+                        HorizontalAlignment="Center"
+                        Foreground="#E1E8F0"
+                        FontSize="24"
+                        TextWrapping="Wrap"
+                        FontWeight="SemiBold"/>
+                </StackPanel>
+            </Border>
+                <Border Background="#1C2638"
+                CornerRadius="15"
+                Margin="20"
+                Width="200">
+                <StackPanel Orientation="Vertical"
+                            VerticalAlignment="Center"
+                            Margin="25">
+                    <TextBlock Text="YOU HAVE RECIEVED"
+                        HorizontalAlignment="Center"
+                        Foreground="#E1E8F0"
+                        FontSize="24"
+                        TextWrapping="Wrap"
+                        FontWeight="SemiBold"
+                        TextAlignment="Center"/>
+                    <TextBlock Text="0"
+                        HorizontalAlignment="Center"
+                        Foreground="#F44336"
+                        TextWrapping="Wrap"
+                        FontSize="24"
+                        FontWeight="Bold"/>
+                    <TextBlock Text="REJECTIONS"
+                        HorizontalAlignment="Center"
+                        Foreground="#E1E8F0"
+                        FontSize="24"
+                        TextWrapping="Wrap"
+                        FontWeight="SemiBold"/>
+                </StackPanel>
+            </Border>
+            </WrapPanel>
+    </Grid>
+</UserControl>

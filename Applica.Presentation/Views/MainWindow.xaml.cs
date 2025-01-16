@@ -10,8 +10,9 @@ namespace Applica.Presentation.Views
     {
         public MainWindow()
         {
+
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(new HomeViewModel());
         }
     }
 }
