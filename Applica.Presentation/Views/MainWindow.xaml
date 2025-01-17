@@ -7,12 +7,16 @@
         xmlns:views="clr-namespace:Applica.Presentation.Views"
         xmlns:viewmodels="clr-namespace:Applica.Presentation.ViewModels"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="Applica" MinHeight="600" MinWidth="800" Height="600" Width="800"
         Background="#121C2D">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
             <views:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:CompaniesViewModel}">
+            <views:CompaniesView/>
         </DataTemplate>
 
     </Window.Resources>
@@ -24,32 +28,49 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <Label Content="APPLICA" 
+            <StackPanel HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <Label Content="APPLICA" 
                    Margin="15 0 0 0"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Center"
                    Foreground="#4DA7FF"
                    FontSize="30"
                    FontWeight="DemiBold"/>
+                <fa:IconImage Icon="AddressBook"
+                              Height="30"
+                              Foreground="{StaticResource primaryButton}"/>
+            </StackPanel>
+
             <StackPanel Orientation="Horizontal" 
                         VerticalAlignment="Center" 
                         HorizontalAlignment="Right"
                         Margin="0 0 15 0">
                 <RadioButton Style="{StaticResource menuButton}"
-                             Tag="{StaticResource buttonText}">
+                             Tag="{StaticResource buttonText}"
+                             Command="{Binding SetVMCommand}"
+                             CommandParameter="{Binding CompaniesViewModel}">
+                        <StackPanel Orientation="Horizontal" >
+                        <fa:IconImage Icon="Building" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="COMPANIES" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <RadioButton Style="{StaticResource menuButton}"
+                             Tag="{StaticResource buttonText}"
+                             Command="{Binding SetVMCommand}"
+                             CommandParameter="{Binding HomeViewModel}">
                     <StackPanel Orientation="Horizontal" >
                         <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
-                        <TextBlock Text="Home" Style="{StaticResource menuButtonText}"/>
+                        <TextBlock Text="HOME" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
-                    
                 </RadioButton>
-                
+
+
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1"/>
-        <Border CornerRadius="15" Grid.Column="1" Grid.Row="1" Background="#2A3546" Margin="15 0 15 15">
-            <!--<views:HomeView />-->
+        <Border CornerRadius="10" Grid.Column="1" Grid.Row="1" Background="{StaticResource AlternateBackgroundBrush}" Margin="15 0 15 15">
             <ContentControl Content="{Binding SelectedViewModel}" />
             </Border>
     

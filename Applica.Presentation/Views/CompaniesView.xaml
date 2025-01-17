@@ -7,27 +7,47 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <ListView 
-             Grid.Row="1" 
-             DataContext="{Binding RecipeVM}"
-             ItemsSource="{Binding Recipes}"
-             SelectedItem="{Binding SelectedRecipe}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical"> 
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="{Binding Company.Name}" FontSize="24" Margin="0,0,20,0"/>
-                        </StackPanel>
-                        <TextBlock Text="{Binding CookingTime.CookingTime}" FontSize="14" />
-                        <TextBlock Text="{Binding RecipeTags}" FontSize="14" Margin="0,0,0,3"/>
-                        <Border Height="1" BorderBrush="#653E35" BorderThickness="0.1"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+
+        <Border CornerRadius="10"
+                Background="{StaticResource secondaryBackground}"
+                Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="45"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="COMPANIES"
+                       FontSize="24"
+                       Foreground="{StaticResource secondaryText}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+                <ComboBox HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Width="100"
+                          Margin="0 0 15 0"/>
+
+                <ListView Grid.Row="1"
+            DataContext="{Binding RecipeVM}"
+            ItemsSource="{Binding Recipes}"
+            SelectedItem="{Binding SelectedRecipe}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="{Binding Company.Name}" FontSize="24" Margin="0,0,20,0"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding CookingTime.CookingTime}" FontSize="14" />
+                                <TextBlock Text="{Binding RecipeTags}" FontSize="14" Margin="0,0,0,3"/>
+                                <Border Height="1" BorderBrush="#653E35" BorderThickness="0.1"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

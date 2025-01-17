@@ -3,7 +3,6 @@ using Applica.Domain.Entities;
 using Applica.Domain.IRepositories;
 using Applica.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using SharpCompress.Common;
 
 namespace Applica.Infrastructure.Repositories
 {
@@ -50,6 +49,7 @@ namespace Applica.Infrastructure.Repositories
         public virtual async Task<TEntity?> GetByIdAsync(string id)
         {
              return await _dbSet.FindAsync(id);
+            
         }
     }
 }

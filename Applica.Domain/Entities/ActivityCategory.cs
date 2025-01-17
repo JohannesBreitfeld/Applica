@@ -6,3 +6,4 @@ namespace Applica.Domain.Entities
         public string Description { get; set; } = null!;
     }
 }
+                                  

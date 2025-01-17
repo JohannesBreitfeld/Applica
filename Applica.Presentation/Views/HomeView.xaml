@@ -24,7 +24,7 @@
                                    TextWrapping="Wrap"
                                    FontWeight="SemiBold"
                                    TextAlignment="Center"/>
-                        <TextBlock Text="0"
+                        <TextBlock Text="{Binding NumberOfApplications}"
                                    HorizontalAlignment="Center"
                                    Foreground="#FFB74D"
                                    TextWrapping="Wrap"
@@ -52,7 +52,7 @@
                         TextWrapping="Wrap"
                         FontWeight="SemiBold"
                         TextAlignment="Center"/>
-                    <TextBlock Text="0"
+                    <TextBlock Text="{Binding NumberOfOffers}"
                         HorizontalAlignment="Center"
                         Foreground="#4CAF50"
                         TextWrapping="Wrap"
@@ -80,7 +80,7 @@
                         TextWrapping="Wrap"
                         FontWeight="SemiBold"
                         TextAlignment="Center"/>
-                    <TextBlock Text="0"
+                    <TextBlock Text="{Binding NumberOfRejections}"
                         HorizontalAlignment="Center"
                         Foreground="#F44336"
                         TextWrapping="Wrap"
