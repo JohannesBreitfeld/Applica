@@ -12,7 +12,7 @@ namespace Applica.Presentation.Views
         {
 
             InitializeComponent();
-            DataContext = new MainViewModel(new HomeViewModel(), new CompaniesViewModel());
+            DataContext = new MainViewModel();
         }
     }
 }

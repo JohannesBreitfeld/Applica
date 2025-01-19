@@ -5,21 +5,23 @@ using System.Windows.Input;
 
 namespace Applica.Presentation.ViewModels
 {
-    internal partial class MainViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
-        public ObservableObject CompaniesViewModel { get; }
+        public CompaniesViewModel CompaniesViewModel { get; }
         public ObservableObject HomeViewModel { get; }
+        public ObservableObject CompaniesDetailedViewModel { get; }
         
         [ObservableProperty]
         private ObservableObject _selectedViewModel;
 
         public ICommand SetVMCommand { get; }
 
-        public MainViewModel(ObservableObject homeViewModel, ObservableObject companiesViewModel)
+        public MainViewModel()
         {
-            HomeViewModel = homeViewModel;
-            CompaniesViewModel = companiesViewModel;
-            _selectedViewModel = homeViewModel;
+            HomeViewModel = new HomeViewModel();
+            CompaniesViewModel = new CompaniesViewModel(this);
+            CompaniesDetailedViewModel = new CompanyDetailedViewModel(this, CompaniesViewModel);
+            _selectedViewModel = HomeViewModel;
             SetVMCommand = new RelayCommand<object>(SetViewModel);
         }
 

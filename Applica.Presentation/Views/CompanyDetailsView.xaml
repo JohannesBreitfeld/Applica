@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Applica.Presentation.Views"
+             xmlns:viewmodels="clr-namespace:Applica.Presentation.ViewModels"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DataContext="{d:DesignInstance Type=viewmodels:CompanyDetailedViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="800" d:DesignWidth="1000">
     
         <Border CornerRadius="10"
                 Background="{StaticResource secondaryBackground}"
@@ -13,15 +16,181 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Row="1"
+            <StackPanel Orientation="Horizontal"  
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Label Content="{Binding CompaniesViewModel.SelectedCompany.Name}"
+                       FontSize="20"
+                       Foreground="{StaticResource primaryText}"
+                       VerticalAlignment="Bottom"/>
+                <TextBlock VerticalAlignment="Center"
+                           Margin="15 5 0 0"
+                           FontSize="15">
+                    <Hyperlink Command="{Binding OpenLinkCommand}">
+                        <Run Text="{Binding CompaniesViewModel.SelectedCompany.Url}" />
+                    </Hyperlink>.
+                </TextBlock>
+
+            </StackPanel>
+            <!--Contact people row 1-->
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Label Content="Contact people:"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource primaryText}"
+                           Margin="5"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <Button Content="{fa:Icon Plus}"
+                                HorizontalAlignment="Right"
+                                ToolTip="Add new contact person"
+                                Command="{Binding AddNewContactPersonCommand}"/>
+                        <Button Content="{fa:Icon Minus}"
+                                HorizontalAlignment="Right"
+                                Command="{Binding DeleteContactPersonCommand}"
+                                CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedContactPerson}"
+                                ToolTip="Delete contact person"
+                                Margin="5"/>
+
+                    </StackPanel>
+                </Grid>
+                <ListView DataContext="{Binding CompaniesViewModel.SelectedCompany}"
+                      ItemsSource="{Binding ContactPeople, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedContactPerson, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Horizontal">
+                           
+                            <TextBlock Text="{Binding Name}" FontSize="14" Margin="5 0 0 0"/>
+                       
+                            <TextBlock Text="{Binding Phone}" 
+                                       FontSize="14" 
+                                       Foreground="{StaticResource secondaryText}"
+                                       Margin="15 0 15 0"/>
+                                <TextBlock Text="{Binding Email}" 
+                                       FontSize="14" 
+                                       Foreground="{StaticResource secondaryText}"/>
+                            </WrapPanel>
+                      
+                        </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1">
+                
+                <StackPanel Orientation="Horizontal"
+                            Margin="5">
+                    <Label Content="Name:"
+                           Foreground="{StaticResource primaryText}"
+                           VerticalAlignment="Center"
+                           Width="50"/>
+                    <TextBox MinWidth="150"
+                             Text="{Binding CompaniesViewModel.SelectedCompany.SelectedContactPerson.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="5 0 5 5">
+                    <Label Content="Phone:"
+                           Foreground="{StaticResource primaryText}"
+                           VerticalAlignment="Center"
+                           Width="50"/>
+                    <TextBox MinWidth="150"
+                             Text="{Binding CompaniesViewModel.SelectedCompany.SelectedContactPerson.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="5 0 5 5">
+                    <Label Content="Email:"
+                           Foreground="{StaticResource primaryText}"
+                           VerticalAlignment="Center"
+                           Width="50"/>
+                    <TextBox MinWidth="150"
+                             Text="{Binding CompaniesViewModel.SelectedCompany.SelectedContactPerson.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+            </StackPanel>
+
+
+<!--Activities row 2-->
+            <StackPanel Grid.Row="2">
+                
+                <Grid>
+                    <Label Content="Current activites"
+                           FontWeight="Bold"
+                           FontSize="14"
+                           Foreground="{StaticResource primaryText}"
+                           Margin="5"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <Button Content="{fa:Icon Plus}"
+                                HorizontalAlignment="Right"
+                                ToolTip="Add new activity"
+                                Command="{Binding AddNewActivityCommand}"/>
+                        <Button Content="{fa:Icon Minus}"
+                                HorizontalAlignment="Right"
+                                Command="{Binding DeleteActivityCommand}"
+                                ToolTip="Delete activity"
+                                Margin="5"/>
+
+                    </StackPanel>
+
+                </Grid>
+                
+                <ListView Grid.Row="2"
+                       DataContext="{Binding CompaniesViewModel.SelectedCompany}"
+                       ItemsSource="{Binding Activities}"
+                       SelectedItem="{Binding SelectedActivity}">
+                <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Orientation="Horizontal">
+                            
+                                <TextBlock Text="{Binding Category.Description}" FontSize="14" Margin="5 0 0 0"/>
+                                <StackPanel Orientation="Horizontal" Margin="15 0 0 15">
+                                    <TextBlock Text="Date:" 
+                                           FontSize="14" 
+                                           Foreground="{StaticResource secondaryText}"
+                                           Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding Date}" 
+                                           FontSize="14" 
+                                           Foreground="{StaticResource secondaryText}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="15 0 0 15">
+                                    <TextBlock Text="Follow up date:" 
+                                               FontSize="14" 
+                                               Foreground="{StaticResource warning}"
+                                               Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding FollowUpDate}" 
+                                               FontSize="14" 
+                                               Foreground="{StaticResource warning}"/>
+                                </StackPanel>
+                            </WrapPanel>
+                        </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                
+            </StackPanel>
+            
+            
+
+
+            <ListView Grid.Row="3"
                       DataContext="{Binding RecipeVM}"
                       ItemsSource="{Binding Recipes}"
                       SelectedItem="{Binding SelectedRecipe}">
@@ -38,24 +207,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView Grid.Row="2"
-DataContext="{Binding RecipeVM}"
-ItemsSource="{Binding Recipes}"
-SelectedItem="{Binding SelectedRecipe}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="{Binding Company.Name}" FontSize="24" Margin="0,0,20,0"/>
-                            </StackPanel>
-                            <TextBlock Text="{Binding CookingTime.CookingTime}" FontSize="14" />
-                            <TextBlock Text="{Binding RecipeTags}" FontSize="14" Margin="0,0,0,3"/>
-                            <Border Height="1" BorderBrush="#653E35" BorderThickness="0.1"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
 
-    </Grid>
+        </Grid>
         </Border>
 </UserControl>

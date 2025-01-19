@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="/Styles/ColorTheme.xaml"/>
                 <ResourceDictionary Source="/Styles/MenuButtons.xaml"/>
                 <ResourceDictionary Source="/Styles/ListView.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBox.xaml"/>
+                <ResourceDictionary Source="/Styles/Buttons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

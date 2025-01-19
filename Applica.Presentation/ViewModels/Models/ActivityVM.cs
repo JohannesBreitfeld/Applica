@@ -9,13 +9,10 @@ public partial class ActivityVM : ObservableObject
     public ObjectId Id { get; set; }
 
     [ObservableProperty]
-    private ActivityCategory _category = null!;
+    private ActivityCategoryVM _category = null!;
 
     [ObservableProperty]
-    private Comment? _comments;
-
-    [ObservableProperty]
-    private List<ContactPerson>? _contactPeople;
+    private string? _description;
 
     [ObservableProperty]
     private DateOnly _date;

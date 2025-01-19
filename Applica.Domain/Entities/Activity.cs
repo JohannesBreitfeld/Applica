@@ -5,9 +5,7 @@ public class Activity : EntityBase
 {
     public ActivityCategory Category { get; set; } = null!;
 
-    public Comment? Comments { get; set; }
-
-    public List<ContactPerson>? ContactPeople { get; set; }
+    public string? Description { get; set; }
 
     public DateOnly Date { get; set; }
 
