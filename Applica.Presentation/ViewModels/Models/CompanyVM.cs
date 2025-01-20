@@ -17,6 +17,9 @@ namespace Applica.Presentation.ViewModels.Models
         private ActivityVM? _selectedActivity;
 
         [ObservableProperty]
+        private CommentVM? _selectedComment;
+
+        [ObservableProperty]
         private string _name = null!;
 
         [ObservableProperty]

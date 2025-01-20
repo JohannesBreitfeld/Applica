@@ -9,5 +9,10 @@ namespace Applica.Presentation.ViewModels.Models
 
         [ObservableProperty]
         private string _description = null!;
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }

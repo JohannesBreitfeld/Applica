@@ -36,12 +36,12 @@
 
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource buttonText}"/>
-                <Setter Property="Background" Value="{StaticResource focus}"/>
+                <Setter Property="Background" Value="{StaticResource primaryButton}"/>
             </Trigger>
 
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource primaryText}"/>
-                <Setter Property="Background" Value="{StaticResource focus}"/>
+                <Setter Property="Background" Value="{StaticResource primaryButton}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

@@ -1,4 +1,5 @@
-﻿using Applica.Presentation.ViewModels.Models;
+﻿using Applica.Presentation.Services;
+using Applica.Presentation.ViewModels.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
@@ -7,8 +8,9 @@ namespace Applica.Presentation.ViewModels;
 
 public partial class CompaniesViewModel : ObservableObject
 {
+    private readonly CompanyService companyService;
     public MainViewModel MainViewModel { get; }
- 
+
     [ObservableProperty]
     private CompanyVM? _selectedCompany;
 
@@ -20,17 +22,20 @@ public partial class CompaniesViewModel : ObservableObject
     public ICommand NewCompanyCommand { get; }
 
 
-    public CompaniesViewModel(MainViewModel mainViewModel)
+    public CompaniesViewModel(MainViewModel mainViewModel, CompanyService companyService)
     {
         MainViewModel = mainViewModel;
 
-        NewCompanyCommand = new RelayCommand(NewCompany);
+        this.companyService = companyService;
+
+        NewCompanyCommand = new AsyncRelayCommand(NewCompany);
     }
 
-    private void NewCompany()
+    private async Task NewCompany()
     {
-        SelectedCompany = new CompanyVM() { Name = "New Company", Url = "www.google.com"};
+        SelectedCompany = new CompanyVM() { Name = "New Company", Url = "www.google.com" };
         Companies.Add(SelectedCompany);
+        await companyService.AddAsync(SelectedCompany);
         MainViewModel.SelectedViewModel = MainViewModel.CompaniesDetailedViewModel;
     }
 }

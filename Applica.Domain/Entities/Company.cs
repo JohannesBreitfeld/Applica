@@ -7,10 +7,10 @@ namespace Applica.Domain.Entities
 
         public string? Url { get; set; }
 
-        public List<Activity>? Activities { get; set; }
+        public ICollection<Activity>? Activities { get; set; }
 
-        public List<Comment>? Comments { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
 
-        public List<ContactPerson>? ContactPeople { get; set; }
+        public ICollection<ContactPerson>? ContactPeople { get; set; }
     }
 }

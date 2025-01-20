@@ -6,10 +6,13 @@
              xmlns:local="clr-namespace:Applica.Presentation.Views"
              xmlns:viewmodels="clr-namespace:Applica.Presentation.ViewModels"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:converters="clr-namespace:Applica.Presentation.Converters"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewmodels:CompanyDetailedViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="800" d:DesignWidth="1000">
-    
+    <UserControl.Resources>
+        <converters:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTimeConverter"/>
+    </UserControl.Resources>
         <Border CornerRadius="10"
                 Background="{StaticResource secondaryBackground}"
                 Margin="10">
@@ -24,27 +27,48 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="2">
+                <Button HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Padding="10"
+                        Margin="5"
+                        Command="{Binding ReturnCommand}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <fa:IconImage Icon="ArrowLeft" 
+                                              Margin="0,0,5,0"
+                                              Height="18"
+                                              Foreground="{StaticResource primaryText}"
+                                              VerticalAlignment="Center"/>
+                                <TextBlock Text="Back" 
+                                           VerticalAlignment="Center"
+                                           FontSize="14"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Button.ContentTemplate>
 
-            <StackPanel Orientation="Horizontal"  
-                        Grid.ColumnSpan="2"
+                </Button>
+                <StackPanel Orientation="Horizontal"  
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Label Content="{Binding CompaniesViewModel.SelectedCompany.Name}"
-                       FontSize="20"
+                       FontSize="22"
                        Foreground="{StaticResource primaryText}"
                        VerticalAlignment="Bottom"/>
                 <TextBlock VerticalAlignment="Center"
                            Margin="15 5 0 0"
-                           FontSize="15">
+                           FontSize="14">
                     <Hyperlink Command="{Binding OpenLinkCommand}">
                         <Run Text="{Binding CompaniesViewModel.SelectedCompany.Url}" />
                     </Hyperlink>.
                 </TextBlock>
 
             </StackPanel>
+            </Grid>
             <!--Contact people row 1-->
             <StackPanel Grid.Row="1">
-                <Grid>
+                <Grid Margin="0 10 0 0">
                     <Label Content="Contact people:"
                            FontSize="14"
                            FontWeight="Bold"
@@ -91,7 +115,8 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1"
-                        Grid.Column="1">
+                        Grid.Column="1"
+                        Margin="0 10 0 0">
                 
                 <StackPanel Orientation="Horizontal"
                             Margin="5">
@@ -127,10 +152,11 @@
 
 
 <!--Activities row 2-->
-            <StackPanel Grid.Row="2">
+            <StackPanel Grid.Row="2"
+                        Margin="0 30 0 0">
                 
                 <Grid>
-                    <Label Content="Current activites"
+                    <Label Content="Current activites:"
                            FontWeight="Bold"
                            FontSize="14"
                            Foreground="{StaticResource primaryText}"
@@ -145,6 +171,7 @@
                         <Button Content="{fa:Icon Minus}"
                                 HorizontalAlignment="Right"
                                 Command="{Binding DeleteActivityCommand}"
+                                CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity}"
                                 ToolTip="Delete activity"
                                 Margin="5"/>
 
@@ -186,28 +213,150 @@
             </ListView>
                 
             </StackPanel>
-            
-            
 
-
-            <ListView Grid.Row="3"
-                      DataContext="{Binding RecipeVM}"
-                      ItemsSource="{Binding Recipes}"
-                      SelectedItem="{Binding SelectedRecipe}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="{Binding Company.Name}" FontSize="24" Margin="0,0,20,0"/>
-                            </StackPanel>
-                            <TextBlock Text="{Binding CookingTime.CookingTime}" FontSize="14" />
-                            <TextBlock Text="{Binding RecipeTags}" FontSize="14" Margin="0,0,0,3"/>
-                            <Border Height="1" BorderBrush="#653E35" BorderThickness="0.1"/>
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <Grid Margin="0 30 0 0">
+                    <StackPanel HorizontalAlignment="Left"
+                                Margin="5">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Top">
+                        <Label Content="Category:"
+                               Width="70"
+                               Foreground="{StaticResource primaryText}"
+                               VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding Categories}"
+                                  SelectedItem="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.Category}"
+                                  Width="120"
+                                  Height="34"
+                                  Margin=" 10 0 0 0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 5 0 5">
+                        <Label Content="Date:"
+                               Width="70"
+                               Foreground="{StaticResource primaryText}"
+                               VerticalAlignment="Center"/>
+                        <DatePicker SelectedDate="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.Date, 
+                                    Converter={StaticResource DateOnlyToDateTimeConverter},
+                                    Mode=TwoWay, 
+                                    UpdateSourceTrigger=PropertyChanged}"
+                                    Width="120"
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 0 0"/>
+                    </StackPanel>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right">
+                        
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="5">
+                            <Label Content="Follow up date:"
+                                   Foreground="{StaticResource primaryText}"
+                                   VerticalAlignment="Center"/>
+                            <DatePicker SelectedDate="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.FollowUpDate, 
+                                        Converter={StaticResource DateOnlyToDateTimeConverter},
+                                        Mode=TwoWay, 
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        Width="120"
+                                        Margin="10 5 0 0"
+                                        VerticalAlignment="Center"/>
                         </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                    </StackPanel>
+                </Grid>
+                <TextBox Text="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         MinHeight="100"
+                         Margin="5"
+                         TextWrapping="Wrap"/>
+            </StackPanel>
 
+<!--Commens row 3-->
+            <StackPanel Grid.Row="3" Margin="0 30 0 0">
+                <Grid>
+                    <Label Content="Comments:"
+                           FontWeight="Bold"
+                           FontSize="14"
+                           Foreground="{StaticResource primaryText}"
+                           Margin="5"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <Button Content="{fa:Icon Plus}"
+                                HorizontalAlignment="Right"
+                                ToolTip="Add new comment"
+                                Command="{Binding AddNewCommentCommand}"/>
+                        <Button Content="{fa:Icon Minus}"
+                                HorizontalAlignment="Right"
+                                Command="{Binding DeleteCommentCommand}"
+                                CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedComment}"
+                                ToolTip="Delete comment"
+                                Margin="5"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+                <ListView Grid.Row="3"
+                      DataContext="{Binding CompaniesViewModel.SelectedCompany}"
+                      ItemsSource="{Binding Comments}"
+                      SelectedItem="{Binding SelectedComment}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="{Binding Label}" 
+                                               FontSize="14" 
+                                               Margin="0 0 20 0"
+                                               Foreground="{StaticResource primaryText}"/>
+                                    <TextBlock Text="{Binding Date}" 
+                                               FontSize="14" 
+                                               Foreground="{StaticResource secondaryText}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Content}" 
+                                           FontSize="12"
+                                           Foreground="{StaticResource secondaryText}"/> 
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" 
+                        Grid.Column="1"
+                        Margin="0 30 0 0">
+                <Grid>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="5">
+                        <Label Content="Label:"
+                               Foreground="{StaticResource primaryText}"
+                               VerticalAlignment="Center"
+                               Margin="0 0 10 0"/>
+                        <TextBox Text="{Binding CompaniesViewModel.SelectedCompany.SelectedComment.Label, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Width="120"/>
+
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0 5 0 5">
+                        <Label Content="Date:"
+                               Foreground="{StaticResource primaryText}"
+                               VerticalAlignment="Center"/>
+                        <DatePicker SelectedDate="{Binding CompaniesViewModel.SelectedCompany.SelectedComment.Date, 
+                                    Converter={StaticResource DateOnlyToDateTimeConverter},
+                                    Mode=TwoWay, 
+                                    UpdateSourceTrigger=PropertyChanged}"
+                                    Width="120"
+                                    Margin="10 0 0 0"
+                                    VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                <TextBox Text="{Binding CompaniesViewModel.SelectedCompany.SelectedComment.Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="5"
+                         MinHeight="100"
+                         TextWrapping="Wrap"/>
+
+            </StackPanel>
         </Grid>
         </Border>
 </UserControl>

@@ -11,6 +11,9 @@ namespace Applica.Presentation.ViewModels.Models
         private string _label = null!;
 
         [ObservableProperty]
+        private DateOnly _date;
+
+        [ObservableProperty]
         private string? _content;
     }
 }
