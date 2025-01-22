@@ -2,6 +2,7 @@
 using Applica.Presentation.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Windows.Input;
 
@@ -9,6 +10,7 @@ namespace Applica.Presentation.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
+        private readonly CompanyService companyService;
         public CompaniesViewModel CompaniesViewModel { get; }
         public ObservableObject HomeViewModel { get; }
         public ObservableObject CompaniesDetailedViewModel { get; }
@@ -18,9 +20,9 @@ namespace Applica.Presentation.ViewModels
 
         public ICommand SetVMCommand { get; }
 
-        public MainViewModel()
+        public MainViewModel(CompanyService companyService)
         {
-            var companyService = new CompanyService( new MongoContext());
+            this.companyService = companyService;
             
             HomeViewModel = new HomeViewModel();
             CompaniesViewModel = new CompaniesViewModel(this, companyService);

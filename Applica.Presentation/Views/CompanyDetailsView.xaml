@@ -9,9 +9,13 @@
              xmlns:converters="clr-namespace:Applica.Presentation.Converters"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewmodels:CompanyDetailedViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="800" d:DesignWidth="1000">
+             d:DesignHeight="800" d:DesignWidth="1000"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <converters:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTimeConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibiltyConverter"/>
+        <converters:BoolToCollapsedConverter x:Key="BoolToCollapsedConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </UserControl.Resources>
         <Border CornerRadius="10"
                 Background="{StaticResource secondaryBackground}"
@@ -52,19 +56,41 @@
                 <StackPanel Orientation="Horizontal"  
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <Label Content="{Binding CompaniesViewModel.SelectedCompany.Name}"
-                       FontSize="22"
-                       Foreground="{StaticResource primaryText}"
+                <TextBox Text="{Binding CompaniesViewModel.SelectedCompany.Name}"
+                         Background="{StaticResource thirdBackground}"
+                        FontSize="22"
+                        Foreground="{StaticResource primaryText}"
                        VerticalAlignment="Bottom"/>
-                <TextBlock VerticalAlignment="Center"
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding CompaniesViewModel.SelectedCompany.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding IsEditingWebsite, Converter={StaticResource BoolToVisibiltyConverter}}"
+                             Margin="15 5 0 0"
+                             FontSize="14"
+                             VerticalAlignment="Center"/>
+                        <TextBlock VerticalAlignment="Center"
                            Margin="15 5 0 0"
-                           FontSize="14">
+                           FontSize="14"
+                           Visibility="{Binding IsEditingWebsite, Converter={StaticResource BoolToCollapsedConverter}}">
                     <Hyperlink Command="{Binding OpenLinkCommand}">
                         <Run Text="{Binding CompaniesViewModel.SelectedCompany.Url}" />
-                    </Hyperlink>.
-                </TextBlock>
-
-            </StackPanel>
+                    </Hyperlink>
+                    <Button Content="{fa:Icon Pencil}"
+                            Command="{Binding EditWebsiteCommand}"
+                            CommandParameter="True"
+                            ToolTip="Edit company website"
+                            Foreground="{StaticResource primaryText}"/>
+                        </TextBlock>
+                        <Button Content="{fa:Icon FloppyDisk}"
+                                Command="{Binding EditWebsiteCommand}"
+                                CommandParameter="False"
+                                FontSize="15"
+                               Height="26"
+                                Width="26.6"
+                                Visibility="{Binding IsEditingWebsite, Converter={StaticResource BoolToVisibiltyConverter}}"
+                                ToolTip="Stop editing"
+                                Foreground="{StaticResource primaryText}"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
             <!--Contact people row 1-->
             <StackPanel Grid.Row="1">
@@ -156,7 +182,7 @@
                         Margin="0 30 0 0">
                 
                 <Grid>
-                    <Label Content="Current activites:"
+                    <Label Content="Activites:"
                            FontWeight="Bold"
                            FontSize="14"
                            Foreground="{StaticResource primaryText}"
@@ -187,7 +213,7 @@
                         <DataTemplate>
                             <WrapPanel Orientation="Horizontal">
                             
-                                <TextBlock Text="{Binding Category.Description}" FontSize="14" Margin="5 0 0 0"/>
+                                <TextBlock Text="{Binding Category}" FontSize="14" Margin="5 0 0 0"/>
                                 <StackPanel Orientation="Horizontal" Margin="15 0 0 15">
                                     <TextBlock Text="Date:" 
                                            FontSize="14" 
@@ -199,7 +225,8 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Margin="15 0 0 15">
-                                    <TextBlock Text="Follow up date:" 
+                                    <TextBlock Text="Follow up date:"
+                                               Visibility="{Binding FollowUpDate, Converter={StaticResource NullToVisibilityConverter}}"
                                                FontSize="14" 
                                                Foreground="{StaticResource warning}"
                                                Margin="0 0 5 0"/>
@@ -225,15 +252,24 @@
                                Foreground="{StaticResource primaryText}"
                                VerticalAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding Categories}"
-                                  SelectedItem="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.Category}"
+                                  SelectedItem="{Binding SelectedCategory}"
                                   Width="120"
                                   Height="34"
-                                  Margin=" 10 0 0 0"/>
-                    </StackPanel>
+                                  Margin=" 10 0 5 0"/>
+                            <Button Content="{fa:Icon Plus}"
+                                    ToolTip="Add new category"
+                                    Command="{Binding AddNewCategoryCommand}"
+                                    Margin="0 0 5 0"/>
+                                    
+                            <Button Content="{fa:Icon Pencil}"
+                                    Command="{Binding EditCategoryCommand}"
+                                    CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.Category}"
+                                    />
+                        </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0 5 0 5">
                         <Label Content="Date:"
-                               Width="70"
+                               Width="70" 
                                Foreground="{StaticResource primaryText}"
                                VerticalAlignment="Center"/>
                         <DatePicker SelectedDate="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity.Date, 
@@ -246,9 +282,22 @@
                     </StackPanel>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right">
-                        
                         <StackPanel Orientation="Horizontal"
-                                    Margin="5">
+                                    Margin="5"
+                                    HorizontalAlignment="Right"
+                                    Visibility="{Binding IsEditingCategory, Converter={StaticResource BoolToVisibiltyConverter}}">
+                            <TextBox MinWidth="100"
+                                     Text="{Binding SelectedCategory.Description, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Content="{fa:Icon FloppyDisk}"
+                                    Command="{Binding SaveCategoryCommand}"
+                                    Margin="5 0 05 0"
+                                    ToolTip="Save category"/>
+                            <Button Content="{fa:Icon Minus}"
+                                    Command="{Binding DeleteCategoryCommand}"
+                                    Margin="0 0 5 0"
+                                    ToolTip="Delete category"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
                             <Label Content="Follow up date:"
                                    Foreground="{StaticResource primaryText}"
                                    VerticalAlignment="Center"/>
@@ -257,7 +306,7 @@
                                         Mode=TwoWay, 
                                         UpdateSourceTrigger=PropertyChanged}"
                                         Width="120"
-                                        Margin="10 5 0 0"
+                                        Margin="10 5 5 0"
                                         VerticalAlignment="Center"/>
                         </StackPanel>
                     </StackPanel>

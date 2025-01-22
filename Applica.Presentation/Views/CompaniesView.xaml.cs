@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Applica.Presentation.ViewModels;
+using Applica.Presentation.ViewModels.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +27,18 @@ namespace Applica.Presentation.Views
         public CompaniesView()
         {
             InitializeComponent();
+          
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is CompaniesViewModel viewModel)
+            {
+                if (viewModel.Companies is null)
+                {
+                    await viewModel.LoadCompaniesAsync(); 
+                }
+            }
         }
     }
 }

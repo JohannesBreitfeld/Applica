@@ -8,50 +8,62 @@ namespace Applica.Presentation.Services;
 
 public class CompanyService
 {
-    private readonly MongoContext _context;
-
-    public CompanyService(MongoContext context)
-    {
-        _context = context;
-    }
-
     public async Task<ObservableCollection<CompanyVM>> GetAllAsync()
     {
-        var companies = await _context.Companies.ToListAsync();
+        using (var context = new MongoContext())
+        {
+            var companies = await context.Companies.ToListAsync();
 
-        return new ObservableCollection<CompanyVM>(companies.Select(MapToModel));
+            return new ObservableCollection<CompanyVM>(companies.Select(MapToModel));
+        }
     }
 
     public async Task AddAsync(CompanyVM company)
     {
-        var entity = MapToEntity(company);
+        using (var context = new MongoContext())
+        {
+            var entity = MapToEntity(company);
 
-        await _context.AddAsync(entity);
+            await context.AddAsync(entity);
 
-        await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+        }
 
     }
 
     public async Task DeleteAsync(CompanyVM company)
     {
-        var entity = await _context.Companies.FindAsync(company.Id);
-
-        if(entity is not null)
+        using (var context = new MongoContext())
         {
-            _context.Remove(entity);
+            var entity = await context.Companies.FindAsync(company.Id);
 
-            await _context.SaveChangesAsync();
+            if (entity is not null)
+            {
+                context.Remove(entity);
+
+                await context.SaveChangesAsync();
+            }
         }
     }
 
     public async Task UpdateAsync(CompanyVM company)
     {
-        var existingCompany = await _context.Companies.FindAsync(company.Id);
-
-        if(existingCompany is not null)
+        using (var context = new MongoContext())
         {
-            existingCompany = MapToEntity(company);
-            await _context.SaveChangesAsync();
+            var existingCompany = await context.Companies.FindAsync(company.Id);
+
+            if (existingCompany is not null)
+            {
+                var mapped = MapToEntity(company);
+
+                existingCompany.Name = mapped.Name;
+                existingCompany.Url = mapped.Url;
+                existingCompany.Comments = mapped.Comments;
+                existingCompany.Activities = mapped.Activities;
+                existingCompany.ContactPeople = mapped.ContactPeople;
+
+                await context.SaveChangesAsync();
+            }
         }
     }
 
@@ -62,29 +74,38 @@ public class CompanyService
             Id = company.Id,
             Name = company.Name,
             Url = company.Url,
-            Activities = (ObservableCollection<ActivityVM>)company!.Activities!.Select(a => new ActivityVM()
-            {
-                Id = a.Id,
-                Category = new ActivityCategoryVM() { Id = a.Category.Id, Description = a.Category.Description },
-                Description = a.Description,
-                Date = a.Date,
-                FollowUpDate = a.FollowUpDate
-            }),
-            Comments = (ObservableCollection<CommentVM>)company!.Comments!.Select(c => new CommentVM()
-            {
-                Id = c.Id,
-                Label = c.Label,
-                Content = c.Content,
-                Date = c.Date
-            }),
-            ContactPeople = (ObservableCollection<ContactPersonVM>)company!.ContactPeople!.Select(cp => new ContactPersonVM()
-            {
-                Id = cp.Id,
-                Name = cp.Name,
-                Phone = cp.Phone,
-                Email = cp.Email
-            })
-        };
+            Activities = company?.Activities != null
+                ? new ObservableCollection<ActivityVM>(
+                    company.Activities.Select(a => new ActivityVM()
+                    {
+                        Id = a.Id,
+                        Category = a.Category,
+                        Description = a.Description,
+                        Date = a.Date,
+                        FollowUpDate = a.FollowUpDate
+                    }))
+                : new ObservableCollection<ActivityVM>(),
+            Comments = company?.Comments != null
+                ? new ObservableCollection<CommentVM>(
+                    company.Comments.Select(c => new CommentVM()
+                    {
+                        Id = c.Id,
+                        Label = c.Label,
+                        Content = c.Content,
+                        Date = c.Date
+                    }))
+                : new ObservableCollection<CommentVM>(), 
+            ContactPeople = company?.ContactPeople != null
+                ? new ObservableCollection<ContactPersonVM>(
+                    company.ContactPeople.Select(cp => new ContactPersonVM()
+                    {
+                        Id = cp.Id,
+                        Name = cp.Name,
+                        Phone = cp.Phone,
+                        Email = cp.Email
+                    }))
+                : new ObservableCollection<ContactPersonVM>()
+        };  
 
         return model;
     }
@@ -99,7 +120,7 @@ public class CompanyService
             Activities = company!.Activities!.Select(a => new Activity()
             {
                 Id = a.Id,
-                Category = new ActivityCategory() { Id = a.Category.Id, Description = a.Category.Description },
+                Category = a.Category,
                 Description = a.Description,
                 Date = a.Date,
                 FollowUpDate = a.FollowUpDate

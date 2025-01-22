@@ -8,7 +8,7 @@ namespace Applica.Presentation.ViewModels.Models
         public ObjectId Id { get; set; }
 
         [ObservableProperty]
-        private string _description = null!;
+        private string _description = string.Empty;
 
         public override string ToString()
         {

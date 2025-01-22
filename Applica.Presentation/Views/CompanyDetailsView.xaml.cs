@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Applica.Presentation.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,14 @@ namespace Applica.Presentation.Views
         public CompanyDetailsView()
         {
             InitializeComponent();
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is CompanyDetailedViewModel viewModel)
+            {
+                await viewModel.LoadCategoriesAsync();
+            }
         }
     }
 }

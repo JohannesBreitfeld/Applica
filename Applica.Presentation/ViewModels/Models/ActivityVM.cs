@@ -9,7 +9,7 @@ public partial class ActivityVM : ObservableObject
     public ObjectId Id { get; set; }
 
     [ObservableProperty]
-    private ActivityCategoryVM _category = null!;
+    private string? _category = string.Empty;
 
     [ObservableProperty]
     private string? _description;
@@ -19,4 +19,5 @@ public partial class ActivityVM : ObservableObject
 
     [ObservableProperty]
     private DateOnly? _followUpDate;
+
 }

@@ -15,5 +15,6 @@ namespace Applica.Presentation.ViewModels.Models
 
         [ObservableProperty]
         private string? _content;
+
     }
 }
