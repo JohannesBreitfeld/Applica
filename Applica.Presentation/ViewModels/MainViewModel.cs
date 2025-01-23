@@ -1,4 +1,5 @@
 ﻿using Applica.Infrastructure.Context;
+using Applica.Presentation.Resources;
 using Applica.Presentation.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -24,11 +25,12 @@ namespace Applica.Presentation.ViewModels
         {
             this.companyService = companyService;
             
-            HomeViewModel = new HomeViewModel();
+            HomeViewModel = new HomeViewModel(companyService);
             CompaniesViewModel = new CompaniesViewModel(this, companyService);
             CompaniesDetailedViewModel = new CompanyDetailedViewModel(this, CompaniesViewModel, companyService);
             _selectedViewModel = HomeViewModel;
             SetVMCommand = new RelayCommand<object>(SetViewModel);
+
         }
 
         private void SetViewModel(object? parameter)

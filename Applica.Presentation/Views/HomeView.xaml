@@ -4,10 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Applica.Presentation.Views"
+             xmlns:viewmodels="clr-namespace:Applica.Presentation.ViewModels"
+             xmlns:converters="clr-namespace:Applica.Presentation.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
- 
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Width="680" 
+                    Height="200"
+                    Content="LOAD SAMPLE DATA"
+                    FontSize="24"
+                    Background="{StaticResource secondaryBackground}"
+                    Command="{Binding LoadSampleDataCommand}"
+                    Visibility="{Binding CanLoadSampleData, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
             <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Border Background="#1C2638"
                 CornerRadius="15"
@@ -95,5 +112,6 @@
                 </StackPanel>
             </Border>
             </WrapPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

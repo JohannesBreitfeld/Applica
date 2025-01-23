@@ -46,7 +46,7 @@ namespace Applica.Presentation.Services
             }
         }
 
-        public async Task UpdateAsync(ActivityCategoryVM newValue, string oldValue)
+        public async Task UpdateAsync(ActivityCategoryVM newValue, string? oldValue)
         {
             using (var context = new MongoContext())
             {
@@ -68,7 +68,7 @@ namespace Applica.Presentation.Services
                         {
                             if(activity?.Category == oldValue)
                             {
-                                activity.Category = newValue.Description;
+                                activity!.Category = newValue.Description;
                                 
                                 await companyService.UpdateAsync(company);
 

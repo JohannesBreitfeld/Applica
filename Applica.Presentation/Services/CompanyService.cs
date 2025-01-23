@@ -31,6 +31,21 @@ public class CompanyService
 
     }
 
+    public async Task AddRangeAsync(ICollection<CompanyVM> companies)
+    {
+        using (var context = new MongoContext())
+        {
+            var mapped = companies.Select(MapToEntity).ToList();
+
+            await context.AddRangeAsync(mapped);
+
+            await context.SaveChangesAsync();
+
+        }
+
+    }
+
+
     public async Task DeleteAsync(CompanyVM company)
     {
         using (var context = new MongoContext())

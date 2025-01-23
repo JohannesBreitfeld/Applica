@@ -12,6 +12,7 @@ namespace Applica.Presentation.ViewModels
     {
         private readonly CompanyService companyService;
         private readonly CategoryService categoryService;
+        private string? oldCategoryValue;
         
         public MainViewModel MainViewModel { get; }
         public CompaniesViewModel CompaniesViewModel { get; }
@@ -59,23 +60,36 @@ namespace Applica.Presentation.ViewModels
             ReturnCommand = new AsyncRelayCommand(Return);
             EditWebsiteCommand = new RelayCommand<string>(ChangeEditWebiste);
             AddNewCategoryCommand = new RelayCommand(AddNewCategory);
-            EditCategoryCommand = new RelayCommand<string>(EditCategory, CanEditCategory);
+            EditCategoryCommand = new RelayCommand(EditCategory);
             SaveCategoryCommand = new AsyncRelayCommand(SaveCategory);
             DeleteCategoryCommand = new AsyncRelayCommand(DeleteCategory);
         }
 
-        private bool CanEditCategory(string? obj)
+        private bool CanEditCategory()
         {
             return SelectedCategory != null;
         }
 
         partial void OnSelectedCategoryChanged(ActivityCategoryVM? value)
         {
-            if(CompaniesViewModel!.SelectedCompany!.SelectedActivity is not null && value is not null)
+            if (CompaniesViewModel!.SelectedCompany!.SelectedActivity is not null && value is not null)
             {
                 CompaniesViewModel.SelectedCompany.SelectedActivity.Category = value.Description;
             }
         }
+
+        partial void OnIsEditingCategoryChanged(bool oldValue, bool newValue)
+        {
+            if (newValue is false)
+            {
+                return;
+            }
+            if (CompaniesViewModel?.SelectedCompany?.SelectedActivity is not null)
+            {
+                oldCategoryValue = CompaniesViewModel?.SelectedCompany?.SelectedActivity?.Category!;
+            }
+        }
+
         private async Task DeleteCategory()
         {
             if(SelectedCategory is not null)
@@ -98,7 +112,7 @@ namespace Applica.Presentation.ViewModels
 
             var index = Categories.IndexOf(SelectedCategory);
 
-            await categoryService.UpdateAsync(SelectedCategory, CompaniesViewModel?.SelectedCompany?.SelectedActivity?.Category!);
+            await categoryService.UpdateAsync(SelectedCategory, oldCategoryValue);
      
             if(Categories.Where(c => c.Id == SelectedCategory.Id).FirstOrDefault() is null)
             {
@@ -106,18 +120,19 @@ namespace Applica.Presentation.ViewModels
             } 
             
             await LoadCategoriesAsync();
+            if(index > 0 && index < Categories.Count)
+            {
+                SelectedCategory = Categories[index];
 
-            SelectedCategory = Categories[index];
+            }
 
         }
 
-        private void EditCategory(string? vM)
+        private void EditCategory()
         {
-            if(vM is not null && SelectedCategory is not null)
-            {
-                SelectedCategory.Description = vM;
-                IsEditingCategory = true;
-            }
+
+           IsEditingCategory = true;
+       
         }
 
         private void AddNewCategory()
