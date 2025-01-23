@@ -10,6 +10,7 @@ namespace Applica.Presentation.ViewModels
     public partial class HomeViewModel : ObservableObject
     {
         private readonly CompanyService companyService;
+        private readonly MainViewModel mainViewModel;
 
         [ObservableProperty]
         private int _numberOfApplications = 0;
@@ -21,13 +22,17 @@ namespace Applica.Presentation.ViewModels
         private int _numberOfRejections = 0;
 
         [ObservableProperty]
+        private int _numberOfNotifications = 0;
+
+        [ObservableProperty]
         private bool _canLoadSampleData = false;
 
         public ICommand LoadSampleDataCommand { get; }
 
-        public HomeViewModel(CompanyService companyService)
+        public HomeViewModel(MainViewModel mainViewModel, CompanyService companyService)
         {
             this.companyService = companyService;
+            this.mainViewModel = mainViewModel;
 
             LoadSampleDataCommand = new AsyncRelayCommand(LoadSampleData);
         }
@@ -39,17 +44,16 @@ namespace Applica.Presentation.ViewModels
             await companyService.AddRangeAsync(sampleData);
 
             await LoadData();
+
+            await mainViewModel.CompaniesViewModel.LoadCompaniesAsync();
         }
 
         public async Task LoadData()
         {
             var data = await companyService.GetAllAsync();
 
-            if(data.Count < 5)
-            {
-                CanLoadSampleData = true;
-            }
-
+            CanLoadSampleData = data.Count < 5 ? true : false;
+        
             NumberOfApplications = data.Where(company => company.Activities
                         .Any(activity => activity.Category == "Application"))
                         .Count();
@@ -61,9 +65,9 @@ namespace Applica.Presentation.ViewModels
             NumberOfRejections = data.Where(company => company.Activities
                         .Any(activity => activity.Category == "Rejection"))
                         .Count();
+
+            NumberOfNotifications = data.Where(company => company.HasNotification).Count();
         }
-
-
 
     }
 }

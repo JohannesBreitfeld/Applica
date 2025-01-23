@@ -25,7 +25,7 @@ namespace Applica.Presentation.ViewModels
         {
             this.companyService = companyService;
             
-            HomeViewModel = new HomeViewModel(companyService);
+            HomeViewModel = new HomeViewModel(this, companyService);
             CompaniesViewModel = new CompaniesViewModel(this, companyService);
             CompaniesDetailedViewModel = new CompanyDetailedViewModel(this, CompaniesViewModel, companyService);
             _selectedViewModel = HomeViewModel;

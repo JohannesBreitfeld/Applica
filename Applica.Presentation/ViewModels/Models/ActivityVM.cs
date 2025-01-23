@@ -20,4 +20,16 @@ public partial class ActivityVM : ObservableObject
     [ObservableProperty]
     private DateOnly? _followUpDate;
 
+    private bool _hasNotification = false;
+
+    public bool HasNotification
+    {
+        get
+        {
+            return FollowUpDate <= DateOnly.FromDateTime(DateTime.Now) ? true : false;
+        }
+        set => _hasNotification = value;
+    }
+
+
 }

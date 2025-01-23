@@ -39,7 +39,7 @@
                 Url = "https://www.greensolutions.se",
                 Activities = new ObservableCollection<ActivityVM>
             {
-                new ActivityVM { Category = "Rejection", Description = "Ansökan avvisad", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), FollowUpDate = null },
+                new ActivityVM { Category = "Offer", Description = "Ansökan avvisad", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), FollowUpDate = null },
                 new ActivityVM { Category = "Application", Description = "Skickade ny ansökan", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-8)), FollowUpDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) }
             },
                 Comments = new ObservableCollection<CommentVM>

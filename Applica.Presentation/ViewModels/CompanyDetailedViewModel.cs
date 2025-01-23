@@ -24,10 +24,14 @@ namespace Applica.Presentation.ViewModels
         private ObservableCollection<ActivityCategoryVM> _categories = new ObservableCollection<ActivityCategoryVM>();
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(EditCategoryCommand))]
         private ActivityCategoryVM? _selectedCategory;
 
         [ObservableProperty]
         private bool _isEditingWebsite;
+
+        //[ObservableProperty]
+        //private string _editToolTip =
 
         public ICommand OpenLinkCommand { get; }
         public ICommand AddNewContactPersonCommand { get; }
@@ -39,7 +43,7 @@ namespace Applica.Presentation.ViewModels
         public ICommand ReturnCommand { get; }
         public ICommand EditWebsiteCommand { get; }
         public ICommand AddNewCategoryCommand { get; }
-        public ICommand EditCategoryCommand { get; }
+        public IRelayCommand EditCategoryCommand { get; }
         public ICommand SaveCategoryCommand { get; }
         public ICommand DeleteCategoryCommand { get; }
 
@@ -60,7 +64,7 @@ namespace Applica.Presentation.ViewModels
             ReturnCommand = new AsyncRelayCommand(Return);
             EditWebsiteCommand = new RelayCommand<string>(ChangeEditWebiste);
             AddNewCategoryCommand = new RelayCommand(AddNewCategory);
-            EditCategoryCommand = new RelayCommand(EditCategory);
+            EditCategoryCommand = new RelayCommand(EditCategory, CanEditCategory);
             SaveCategoryCommand = new AsyncRelayCommand(SaveCategory);
             DeleteCategoryCommand = new AsyncRelayCommand(DeleteCategory);
         }

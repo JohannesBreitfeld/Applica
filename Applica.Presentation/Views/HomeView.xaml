@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:Applica.Presentation.Views"
              xmlns:viewmodels="clr-namespace:Applica.Presentation.ViewModels"
              xmlns:converters="clr-namespace:Applica.Presentation.Converters"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="800" d:DesignWidth="800"
              Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
@@ -17,16 +18,23 @@
     
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Width="680" 
-                    Height="200"
+            <Border Width="680"
+                    Height="100"
+                    Margin="20"
+                    CornerRadius="15"
+                    Background="{StaticResource secondaryBackground}"
+                    Visibility="{Binding CanLoadSampleData, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Button Width="660" 
+                    Height="80"
                     Content="LOAD SAMPLE DATA"
+                    FontWeight="SemiBold"
                     FontSize="24"
                     Background="{StaticResource secondaryBackground}"
                     Command="{Binding LoadSampleDataCommand}"
                     Visibility="{Binding CanLoadSampleData, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
+            </Border>
             <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Border Background="#1C2638"
+                <Border Background="{StaticResource secondaryBackground}"
                 CornerRadius="15"
                 Margin="20"
                 Width="200"
@@ -55,7 +63,7 @@
                                    FontWeight="SemiBold"/>
                         </StackPanel>
                 </Border>
-                <Border Background="#1C2638"
+                <Border Background="{StaticResource secondaryBackground}"
                 CornerRadius="15"
                 Margin="20"
                 Width="200">
@@ -83,7 +91,7 @@
                         FontWeight="SemiBold"/>
                 </StackPanel>
             </Border>
-                <Border Background="#1C2638"
+                <Border Background="{StaticResource secondaryBackground}"
                 CornerRadius="15"
                 Margin="20"
                 Width="200">
@@ -99,7 +107,7 @@
                         TextAlignment="Center"/>
                     <TextBlock Text="{Binding NumberOfRejections}"
                         HorizontalAlignment="Center"
-                        Foreground="#F44336"
+                        Foreground="{StaticResource error}"
                         TextWrapping="Wrap"
                         FontSize="24"
                         FontWeight="Bold"/>
@@ -112,6 +120,41 @@
                 </StackPanel>
             </Border>
             </WrapPanel>
+            <Border Background="{StaticResource secondaryBackground}"
+                    CornerRadius="15"
+                    Margin="20"
+                    Height="100"
+                    Width="680">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="YOU HAVE "
+                               VerticalAlignment="Center"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource primaryText}"/>
+                    <TextBlock Text="{Binding NumberOfNotifications}"
+                               VerticalAlignment="Center"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource primaryText}"/>
+                    <TextBlock Text=" NOTIFICATIONS"
+                               VerticalAlignment="Center"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource primaryText}"/>
+
+
+                    <Button Content="{fa:Icon Bell,IconFont=Solid}"
+                            FontSize="24"
+                            Foreground="{StaticResource error}"
+                            Background="{StaticResource secondaryBackground}"/>
+                    
+                </StackPanel>
+                
+                
+            </Border>
+                    
         </StackPanel>
     </Grid>
 </UserControl>

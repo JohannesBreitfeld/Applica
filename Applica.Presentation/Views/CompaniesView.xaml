@@ -85,11 +85,11 @@
                                            Margin="5 0 0 0"
                                            HorizontalAlignment="Left"/>
 
-                                <Button Content="Open"
+                                <Button Content="OPEN"
                                         Grid.RowSpan="2"
                                         HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        FontSize="16"
+                                        VerticalAlignment="Center" 
+                                        FontSize="20"
                                     Command="{Binding DataContext.OpenCommand, 
                                     RelativeSource={RelativeSource AncestorType=UserControl}}">
                                     <Button.Visibility>

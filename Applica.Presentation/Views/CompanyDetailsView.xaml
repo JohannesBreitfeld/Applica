@@ -233,6 +233,13 @@
                                     <TextBlock Text="{Binding FollowUpDate}" 
                                                FontSize="14" 
                                                Foreground="{StaticResource warning}"/>
+                                    <fa:IconImage Icon="Bell"
+                                                  IconFont="Solid"
+                                                  Height="20"
+                                                  Width="20"
+                                                  Margin="5 0 0 0"
+                                                  Foreground="{StaticResource error}"
+                                                  Visibility="{Binding HasNotification, Converter={StaticResource BoolToVisibiltyConverter}}"/>
                                 </StackPanel>
                             </WrapPanel>
                         </DataTemplate>

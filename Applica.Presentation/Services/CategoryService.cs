@@ -14,6 +14,19 @@ namespace Applica.Presentation.Services
             {
                 var categories = await context.ActivityCategories.ToListAsync();
 
+                if(categories.Any(c => c.Description == "Application") is false)
+                {
+                    categories.Add(new ActivityCategory() { Description = "Application" });
+                }
+                if (categories.Any(c => c.Description == "Rejection") is false)
+                {
+                    categories.Add(new ActivityCategory() { Description = "Rejection" });
+                }
+                if (categories.Any(c => c.Description == "Offer") is false)
+                {
+                    categories.Add(new ActivityCategory() { Description = "Offer" });
+                }
+
                 return new ObservableCollection<ActivityCategoryVM>(categories.Select(MapToModel));
             }
         }
