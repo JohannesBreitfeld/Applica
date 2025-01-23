@@ -125,6 +125,9 @@
                     Margin="20"
                     Height="100"
                     Width="680">
+                <Button Width="660"
+                        Height="80"
+                        Background="{StaticResource secondaryBackground}">
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
@@ -145,13 +148,14 @@
                                Foreground="{StaticResource primaryText}"/>
 
 
-                    <Button Content="{fa:Icon Bell,IconFont=Solid}"
-                            FontSize="24"
-                            Foreground="{StaticResource error}"
-                            Background="{StaticResource secondaryBackground}"/>
+                    <fa:IconImage Icon="Bell"
+                                  IconFont="Solid"
+                                  Height="35"
+                                  Margin="5 0 0 0"
+                                  Foreground="{StaticResource error}"/>
                     
                 </StackPanel>
-                
+                </Button>
                 
             </Border>
                     

@@ -28,10 +28,7 @@ namespace Applica.Presentation.ViewModels
         private ActivityCategoryVM? _selectedCategory;
 
         [ObservableProperty]
-        private bool _isEditingWebsite;
-
-        //[ObservableProperty]
-        //private string _editToolTip =
+        private bool _isEditingWebsite; 
 
         public ICommand OpenLinkCommand { get; }
         public ICommand AddNewContactPersonCommand { get; }
