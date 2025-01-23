@@ -36,9 +36,9 @@ namespace Applica.Presentation.ViewModels
         {
             var sampleData = SampleDataGenerator.GenerateSampleData();
 
-            CanLoadSampleData = false;
-
             await companyService.AddRangeAsync(sampleData);
+
+            await LoadData();
         }
 
         public async Task LoadData()

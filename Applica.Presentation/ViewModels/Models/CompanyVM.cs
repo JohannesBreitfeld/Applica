@@ -63,6 +63,26 @@ public partial class CompanyVM :ObservableObject
         }
     }
 
+    private bool _hasNotification = false;
+
+    public bool HasNotification
+    {
+        get
+        {
+            var returnValue = false;
+            foreach (var activity in Activities)
+            {
+                if (activity.FollowUpDate <= DateOnly.FromDateTime(DateTime.Now))
+                {
+                    returnValue = true;
+                }
+            }
+            return returnValue;
+        }
+        set => _hasNotification = value;
+
+    }
+
     //public event Action? CompanyInfoChanged;
 
     //public CompanyVM()

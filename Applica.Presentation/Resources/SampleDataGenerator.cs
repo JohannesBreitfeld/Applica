@@ -40,7 +40,7 @@
                 Activities = new ObservableCollection<ActivityVM>
             {
                 new ActivityVM { Category = "Rejection", Description = "Ansökan avvisad", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), FollowUpDate = null },
-                new ActivityVM { Category = "Application", Description = "Skickade ny ansökan", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-8)), FollowUpDate = DateOnly.FromDateTime(DateTime.Now.AddDays(10)) }
+                new ActivityVM { Category = "Application", Description = "Skickade ny ansökan", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-8)), FollowUpDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) }
             },
                 Comments = new ObservableCollection<CommentVM>
             {
@@ -141,7 +141,7 @@
                 Url = "https://www.techinnovations.se",
                 Activities = new ObservableCollection<ActivityVM>
             {
-                new ActivityVM { Category = "Application", Description = "Ansökan skickad", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), FollowUpDate = DateOnly.FromDateTime(DateTime.Now.AddDays(7)) },
+                new ActivityVM { Category = "Application", Description = "Ansökan skickad", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), FollowUpDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)) },
                 new ActivityVM { Category = "Correspondence", Description = "Korrespondens angående ansökan", Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), FollowUpDate = null }
             },
                 Comments = new ObservableCollection<CommentVM>
