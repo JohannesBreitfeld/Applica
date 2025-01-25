@@ -9,7 +9,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
-        Title="Applica" MinHeight="600" MinWidth="1200" Height="800" Width="800"
+        Title="Applica" MinHeight="800" MinWidth="1200" Height="800" Width="800"
         Background="#121C2D"
         Closing="Window_Closing">
     <Window.Resources>

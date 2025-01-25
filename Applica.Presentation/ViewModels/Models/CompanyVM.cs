@@ -46,11 +46,11 @@ public partial class CompanyVM :ObservableObject
             {
                 if (Activities.Count() == 1 || activity == Activities.LastOrDefault())
                 {
-                    activities += activity.Category;
+                    activities += $"{activity.Category} {activity.Date}";
                 }
                 else
                 {
-                    activities += $"{activity.Category} - ";
+                    activities += $"{activity.Category} {activity.Date}  -  ";
                 }
             }
 

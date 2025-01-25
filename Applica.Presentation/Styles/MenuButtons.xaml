@@ -31,10 +31,10 @@
             </Trigger>
             <!--Menu button activated-->
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Margin" Value="5, 0, 0, 0"/>
+                <Setter Property="Margin" Value="5, 0, 0, -5"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{DynamicResource interactiveText}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource success}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
             </Trigger>
 
         </Style.Triggers>
