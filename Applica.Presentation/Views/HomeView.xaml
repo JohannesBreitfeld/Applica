@@ -127,6 +127,7 @@
                     Width="680">
                 <Button Width="660"
                         Height="80"
+                        Command="{Binding NotificationButtonCommmand}"
                         Background="{StaticResource secondaryBackground}">
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"

@@ -22,12 +22,14 @@ namespace Applica.Presentation.ViewModels
         private int _numberOfRejections = 0;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NotificationButtonCommmand))]
         private int _numberOfNotifications = 0;
 
         [ObservableProperty]
         private bool _canLoadSampleData = false;
 
         public ICommand LoadSampleDataCommand { get; }
+        public IRelayCommand NotificationButtonCommmand { get; }
 
         public HomeViewModel(MainViewModel mainViewModel, CompanyService companyService)
         {
@@ -35,6 +37,21 @@ namespace Applica.Presentation.ViewModels
             this.mainViewModel = mainViewModel;
 
             LoadSampleDataCommand = new AsyncRelayCommand(LoadSampleData);
+            NotificationButtonCommmand = new AsyncRelayCommand(OpenNotification, CanExcecuteNotificationCommand);
+        }
+
+        private bool CanExcecuteNotificationCommand()
+        {
+            return NumberOfNotifications > 0;
+        }
+
+        private async Task OpenNotification()
+        {
+            mainViewModel.SelectedViewModel = mainViewModel.CompaniesViewModel;
+
+            mainViewModel.CompaniesViewModel.Companies = await companyService
+                .FindAsync(company => company.Activities!
+                .Any(activity => activity.FollowUpDate <= DateOnly.FromDateTime(DateTime.Now) && activity.FollowUpDate != null));
         }
 
         private async Task LoadSampleData()
@@ -45,12 +62,14 @@ namespace Applica.Presentation.ViewModels
 
             await LoadData();
 
-            await mainViewModel.CompaniesViewModel.LoadCompaniesAsync();
+            await mainViewModel.CompaniesViewModel.LoadAllCompaniesAsync();
         }
 
         public async Task LoadData()
         {
             var data = await companyService.GetAllAsync();
+
+            mainViewModel.CompaniesViewModel.Companies = data;
 
             CanLoadSampleData = data.Count < 5 ? true : false;
         

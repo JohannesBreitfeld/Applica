@@ -56,7 +56,7 @@ public partial class CompaniesViewModel : ObservableObject
         MainViewModel.SelectedViewModel = MainViewModel.CompaniesDetailedViewModel;
     }
 
-    public async Task LoadCompaniesAsync()
+    public async Task LoadAllCompaniesAsync()
     {
         Companies = await companyService.GetAllAsync();
     }
