@@ -26,11 +26,20 @@
                     <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
 
-
-                <ComboBox HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
-                          Width="100"
-                          Margin="15 0 15 0"/>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <ComboBox ItemsSource="{Binding FilterBy}"
+                              SelectedItem="{Binding FilterSelected}"
+                              FontSize="14"
+                              Width="150"
+                              Margin="15 0 15 0"/>
+                    <ComboBox ItemsSource="{Binding OrderBy}"
+                              SelectedItem="{Binding OrderSelected}"
+                              FontSize="14"
+                              Width="150"
+                              Margin="15 0 15 0"/>
+                </StackPanel>
 
                 <Label Content="COMPANIES"
                        FontSize="24"

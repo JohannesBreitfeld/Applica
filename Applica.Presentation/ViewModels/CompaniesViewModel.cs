@@ -1,4 +1,5 @@
-﻿using Applica.Presentation.Services;
+﻿using Applica.Domain.Entities;
+using Applica.Presentation.Services;
 using Applica.Presentation.ViewModels.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,10 +20,24 @@ public partial class CompaniesViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<CompanyVM>? _companies;
 
+    [ObservableProperty]
+    private ObservableCollection<string> _filterBy = new ObservableCollection<string> { "Filter by...", "All companies", "Application sent", "Application not sent", "Follow up date reached" };
+
+    [ObservableProperty]
+    private string _filterSelected = "Filter by...";
+
+
+    [ObservableProperty]
+    private ObservableCollection<string> _orderBy = new ObservableCollection<string> { "Order by...", "Alphabet", "Latest activity", "Follow up date" };
+
+    [ObservableProperty]
+    private string _orderSelected = "Order by...";
+
     public ICommand DeleteCompanyCommand { get; }
     public ICommand NewCompanyCommand { get; }
     public ICommand OpenCommand { get; }
-
+    public ICommand UpdateCommand { get; }
+   
     public CompaniesViewModel(MainViewModel mainViewModel, CompanyService companyService)
     {
         MainViewModel = mainViewModel;
@@ -32,6 +47,61 @@ public partial class CompaniesViewModel : ObservableObject
         NewCompanyCommand = new AsyncRelayCommand(NewCompany);
         DeleteCompanyCommand = new AsyncRelayCommand<CompanyVM>(DeleteCompany!, sc => sc is not null);
         OpenCommand = new RelayCommand(OpenDetailedView);
+        UpdateCommand = new AsyncRelayCommand(UpdateCompanies);
+    }
+
+    partial void OnFilterSelectedChanged(string value)
+    {
+        UpdateCommand.Execute(null);
+    }
+
+    partial void OnOrderSelectedChanged(string value)
+    {
+        OrderCompanies();
+    }
+
+    private void OrderCompanies()
+    {
+        if (string.IsNullOrEmpty(OrderSelected) || Companies is null)
+        {
+            return;
+        }
+        Companies = OrderSelected switch
+        {
+            "Alphabet" => new ObservableCollection<CompanyVM>(Companies.OrderBy(company => company.Name)),
+
+            "Latest activity" => new ObservableCollection<CompanyVM>(Companies.OrderBy(company => company.Activities.Max(Activity => Activity.Date))),
+
+            "Follow up date" => new ObservableCollection<CompanyVM>(Companies.OrderBy(company => company.Activities.Min(Activity => Activity.FollowUpDate))),
+
+            _ => Companies
+        };
+    }
+
+    private async Task UpdateCompanies()
+    {
+        if (string.IsNullOrEmpty(FilterSelected))
+        {
+            return;
+        }
+        Companies = FilterSelected switch
+        {
+            "All companies" => await companyService.GetAllAsync(),
+
+            "Application sent" => await companyService
+                .FindAsync(company => company.Activities!
+                .Any(activity => activity.Category == "Application")),
+
+            "Application not sent" => await companyService
+                .FindAsync(company => company.Activities!
+                .All(activity => activity.Category != "Application")),
+
+            "Follow up date reached" => await companyService
+                .FindAsync(company => company.Activities!
+                .Any(activity => activity.FollowUpDate <= DateOnly.FromDateTime(DateTime.Now) && activity.FollowUpDate != null)),
+            _ => Companies
+
+        };
     }
 
     private void OpenDetailedView()
