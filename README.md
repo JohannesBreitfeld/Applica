@@ -4,10 +4,10 @@
 
 - Add a user secret with your MongoDB Atlas connection string in Applica.infrastructure project.  
 
-![User secret](images/UserSecret.bmp)
+![User secret](Images/UserSecret.bmp)
 
 - Or you can just change the connection string in the code directly.  
 
 ![Connection string](Images/ConnectionString.bmp)
 
-### NOTE THAT THE APP WILL NOT RUN PROPERLY IF YOU SET THE DATABASE UP AGAINST LOCALHOST.
+### NOTE THAT THE APPLICATION WILL NOT RUN AS INTENDED IF YOU SET THE DATABASE UP AGAINST LOCALHOST.
