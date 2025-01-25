@@ -102,6 +102,7 @@ public partial class CompaniesViewModel : ObservableObject
             _ => Companies
 
         };
+        OrderCompanies();
     }
 
     private void OpenDetailedView()
@@ -120,7 +121,7 @@ public partial class CompaniesViewModel : ObservableObject
 
     private async Task NewCompany()
     {
-        SelectedCompany = new CompanyVM() { Name = "New Company", Url = "www.google.com" };
+        SelectedCompany = new CompanyVM() { Name = "New Company", Url = "www.website.com" };
         Companies?.Add(SelectedCompany);
         await companyService.AddAsync(SelectedCompany);
         MainViewModel.SelectedViewModel = MainViewModel.CompaniesDetailedViewModel;
@@ -129,14 +130,6 @@ public partial class CompaniesViewModel : ObservableObject
     public async Task LoadAllCompaniesAsync()
     {
         Companies = await companyService.GetAllAsync();
-    }
-
-    private async void SaveChangesAsync()
-    {
-        if(SelectedCompany is not null)
-        {
-            await companyService.UpdateAsync(SelectedCompany);
-        }
     }
 
 }

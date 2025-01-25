@@ -67,9 +67,7 @@ namespace Applica.Presentation.Services
 
                 if (existingCategory is not null)
                 {
-                    var mapped = MapToEntity(newValue);
-
-                    existingCategory.Description = mapped.Description;
+                    existingCategory.Description = newValue.Description;
 
                     var companyService = new CompanyService();
 

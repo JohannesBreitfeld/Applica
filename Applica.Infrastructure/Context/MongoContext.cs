@@ -1,5 +1,7 @@
 ﻿using Applica.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Applica.Infrastructure.Context
 {
@@ -7,20 +9,17 @@ namespace Applica.Infrastructure.Context
     {
         public DbSet<Company> Companies { get; set; }
 
-        //public DbSet<Activity> Activities { get; set; }
-
-        //public DbSet<Comment> Comments { get; set; }
-
-        //public DbSet<ContactPerson> ContactPeople { get; set; }
-
         public DbSet<ActivityCategory> ActivityCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "mongodb+srv://jbvbreitfeld:johannes@cluster0.4csvg.mongodb.net/";
+            var config = new ConfigurationBuilder().AddUserSecrets<MongoContext>().Build();
+            
+            var connectionString = config["ConnectionString"];
+
             var collection = "johannesbreitfeld";
 
-            optionsBuilder.UseMongoDB(connectionString, collection);
+            optionsBuilder.UseMongoDB(connectionString!, collection);
        
 
         }

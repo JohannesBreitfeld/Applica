@@ -121,6 +121,7 @@ namespace Applica.Presentation.ViewModels
             } 
             
             await LoadCategoriesAsync();
+
             if(index > 0 && index < Categories.Count)
             {
                 SelectedCategory = Categories[index];
@@ -178,6 +179,7 @@ namespace Applica.Presentation.ViewModels
         public async Task LoadCategoriesAsync()
         {
             Categories = await categoryService.GetAllAsync();
+
         } 
        
         private void OpenLink()
