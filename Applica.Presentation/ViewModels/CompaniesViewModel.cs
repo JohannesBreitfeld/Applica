@@ -70,9 +70,15 @@ public partial class CompaniesViewModel : ObservableObject
         {
             "Alphabet" => new ObservableCollection<CompanyVM>(Companies.OrderBy(company => company.Name)),
 
-            "Latest activity" => new ObservableCollection<CompanyVM>(Companies.OrderBy(company => company.Activities.Max(Activity => Activity.Date))),
+            "Latest activity" => new ObservableCollection<CompanyVM>(new ObservableCollection<CompanyVM>(
+                Companies.OrderByDescending(company => company.Activities
+                    .DefaultIfEmpty(new ActivityVM() { Date = DateOnly.MinValue})
+                    .Max(activity => activity?.Date ?? DateOnly.MinValue)))),
 
-            "Follow up date" => new ObservableCollection<CompanyVM>(Companies.OrderBy(company => company.Activities.Min(Activity => Activity.FollowUpDate))),
+            "Follow up date" => new ObservableCollection<CompanyVM>(
+                Companies.OrderBy(company => company.Activities
+                    .DefaultIfEmpty(new ActivityVM() { FollowUpDate = DateOnly.MaxValue})
+                    .Min(activity => activity?.FollowUpDate ?? DateOnly.MaxValue))),
 
             _ => Companies
         };

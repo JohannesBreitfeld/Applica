@@ -111,10 +111,10 @@
                                     </Button.Visibility>
                                 </Button>
 
-                                <Border Height="1" 
+                                <!--<Border Height="1" 
                                         Grid.Row="2"
                                         BorderBrush="{StaticResource secondaryText}" 
-                                        BorderThickness="0.3"/>
+                                        BorderThickness="0.3"/>-->
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
