@@ -114,12 +114,7 @@ namespace Applica.Presentation.ViewModels
             var index = Categories.IndexOf(SelectedCategory);
 
             await categoryService.UpdateAsync(SelectedCategory, oldCategoryValue);
-     
-            if(Categories.Where(c => c.Id == SelectedCategory.Id).FirstOrDefault() is null)
-            {
-                Categories.Add(SelectedCategory);
-            } 
-            
+                 
             await LoadCategoriesAsync();
 
             if(index > 0 && index < Categories.Count)
@@ -156,6 +151,7 @@ namespace Applica.Presentation.ViewModels
             }
             
             MainViewModel.SelectedViewModel = CompaniesViewModel;
+            await MainViewModel.CompaniesViewModel.LoadAllCompaniesAsync();
         }
 
         private void AddNewComment()
