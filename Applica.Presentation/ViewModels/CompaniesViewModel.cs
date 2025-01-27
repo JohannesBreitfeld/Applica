@@ -50,6 +50,27 @@ public partial class CompaniesViewModel : ObservableObject
         UpdateCommand = new AsyncRelayCommand(UpdateCompanies);
     }
 
+    partial void OnSelectedCompanyChanged(CompanyVM? oldValue, CompanyVM? newValue)
+    {
+        if(oldValue is not null)
+        {
+            oldValue.SelectedActivityChanged -= SelectedActivityChanged;
+        }
+
+        if (newValue is not null)
+        {
+            newValue.SelectedActivityChanged += SelectedActivityChanged;
+        }
+
+    }
+
+    private void SelectedActivityChanged()
+    {
+        MainViewModel.CompaniesDetailedViewModel.SelectedCategory = MainViewModel.CompaniesDetailedViewModel.Categories
+            .FirstOrDefault(c => c.Description == SelectedCompany?.SelectedActivity?.Category)
+            ?? MainViewModel.CompaniesDetailedViewModel.Categories.FirstOrDefault();
+    }
+
     partial void OnFilterSelectedChanged(string value)
     {
         UpdateCommand.Execute(null);

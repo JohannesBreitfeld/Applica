@@ -14,7 +14,7 @@ namespace Applica.Presentation.ViewModels
         private readonly CompanyService companyService;
         public CompaniesViewModel CompaniesViewModel { get; }
         public ObservableObject HomeViewModel { get; }
-        public ObservableObject CompaniesDetailedViewModel { get; }
+        public CompanyDetailedViewModel CompaniesDetailedViewModel { get; }
         
         [ObservableProperty]
         private ObservableObject _selectedViewModel;

@@ -83,49 +83,10 @@ public partial class CompanyVM :ObservableObject
 
     }
 
-    //public event Action? CompanyInfoChanged;
+    public event Action? SelectedActivityChanged;
 
-    //public CompanyVM()
-    //{
-
-    //    _activities.CollectionChanged += (s, e) => SubscribeToChangesInCollection(_activities);
-    //    _comments.CollectionChanged += (s, e) => SubscribeToChangesInCollection(_comments);
-    //    _contactPeople.CollectionChanged += (s, e) => SubscribeToChangesInCollection(_contactPeople);
-
-    //    SubscribeToChangesInCollection(_activities);
-    //    SubscribeToChangesInCollection(_comments);
-    //    SubscribeToChangesInCollection(_contactPeople);
-    //}
-
-    //private void SubscribeToChangesInCollection<T>(ObservableCollection<T> collection) where T : ObservableObject
-    //{
-    //    foreach (var item in collection)
-    //    {
-    //        if (item is INotifyPropertyChanged observableItem)
-    //        {
-    //            observableItem.PropertyChanged += Item_PropertyChangedExternally;
-    //        }
-    //    }
-    //}
-
-    //private void Item_PropertyChangedExternally(object? sender, PropertyChangedEventArgs e)
-    //{
-    //     CompanyInfoChanged?.Invoke();
-    //}
-
-    //public void AddActivity(ActivityVM activity)
-    //{
-    //    Activities.Add(activity);
-    //    activity.PropertyChanged += Item_PropertyChangedExternally;
-    //}
-
-    //partial void OnNameChanged(string value)
-    //{
-    //    CompanyInfoChanged?.Invoke();
-    //}
-
-    //partial void OnUrlChanged(string? value)
-    //{
-    //    CompanyInfoChanged?.Invoke();
-    //}
+    partial void OnSelectedActivityChanged(ActivityVM? value)
+    {
+        SelectedActivityChanged?.Invoke();
+    }
 }
