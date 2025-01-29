@@ -67,8 +67,7 @@ public partial class CompaniesViewModel : ObservableObject
     private void SelectedActivityChanged()
     {
         MainViewModel.CompaniesDetailedViewModel.SelectedCategory = MainViewModel.CompaniesDetailedViewModel.Categories
-            .FirstOrDefault(c => c.Description == SelectedCompany?.SelectedActivity?.Category)
-            ?? MainViewModel.CompaniesDetailedViewModel.Categories.FirstOrDefault();
+            .FirstOrDefault(c => c.Description == SelectedCompany?.SelectedActivity?.Category);
     }
 
     partial void OnFilterSelectedChanged(string value)
