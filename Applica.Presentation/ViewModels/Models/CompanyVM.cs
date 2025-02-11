@@ -82,6 +82,23 @@ public partial class CompanyVM :ObservableObject
         set => _hasNotification = value;
 
     }
+    private DateOnly? _closestFollowUp = null;
+
+    public DateOnly? ClosestFollowUp
+    {
+        get
+        {
+          var nearestFollowUp = Activities
+                .Where(a => a.FollowUpDate.HasValue)
+                .OrderBy(a => a.FollowUpDate)
+                .FirstOrDefault();
+
+            return nearestFollowUp?.FollowUpDate;
+        }
+        set => _closestFollowUp = value;
+
+    }
+
 
     public event Action? SelectedActivityChanged;
 

@@ -219,18 +219,18 @@
                                            FontSize="14" 
                                            Foreground="{StaticResource secondaryText}"
                                            Margin="0 0 5 0"/>
-                                    <TextBlock Text="{Binding Date}" 
+                                    <TextBlock Text="{Binding Date,StringFormat={}{0:yyyy-MM-dd}}" 
                                            FontSize="14" 
-                                           Foreground="{StaticResource secondaryText}"/>
+                                           Foreground="{StaticResource primaryText}"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Margin="15 0 0 15">
                                     <TextBlock Text="Follow up date:"
                                                Visibility="{Binding FollowUpDate, Converter={StaticResource NullToVisibilityConverter}}"
                                                FontSize="14" 
-                                               Foreground="{StaticResource warning}"
+                                               Foreground="{StaticResource secondaryText}"
                                                Margin="0 0 5 0"/>
-                                    <TextBlock Text="{Binding FollowUpDate}" 
+                                    <TextBlock Text="{Binding FollowUpDate,StringFormat={}{0:yyyy-MM-dd}}" 
                                                FontSize="14" 
                                                Foreground="{StaticResource warning}"/>
                                     <fa:IconImage Icon="Bell"

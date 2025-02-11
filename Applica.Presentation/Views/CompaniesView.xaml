@@ -13,6 +13,8 @@
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:SelectedItemToVisibilityConverter x:Key="SelectedItemToVisibilityConverter"/>
+        <converters:EmptyStringToCollapsedConverter x:Key="EmptyStringToCollapsedConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
 
@@ -81,8 +83,22 @@
                                            Grid.Row="0"
                                            Margin="5"
                                            HorizontalAlignment="Left"/>
+                                    <TextBlock Text="Next follow up date: "
+                                               FontSize="14"
+                                               VerticalAlignment="Bottom"
+                                               Margin="20 0 0 7"
+                                               Foreground="{StaticResource secondaryText}"
+                                               Visibility="{Binding ClosestFollowUp, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                    <TextBlock Text="{Binding ClosestFollowUp, StringFormat={}{0:yyyy-MM-dd}}"
+                                               FontSize="14"
+                                               VerticalAlignment="Bottom"
+                                               Margin="0 0 0 7"
+                                               Foreground="{StaticResource warning}"
+                                               Visibility="{Binding ClosestFollowUp, Converter={StaticResource NullToVisibilityConverter}}"/>
                                     <fa:IconImage Icon="Bell"
                                                   IconFont="Solid"
+                                                  Margin="20 0 0 0"
+                                                  VerticalAlignment="Bottom"
                                                   Foreground="{StaticResource error}"
                                                   Visibility="{Binding HasNotification, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
@@ -92,7 +108,8 @@
                                            FontSize="14"
                                            Grid.Row="1"
                                            Margin="5 0 0 0"
-                                           HorizontalAlignment="Left"/>
+                                           HorizontalAlignment="Left"
+                                           Visibility="{Binding ActivitiesString, Converter={StaticResource EmptyStringToCollapsedConverter}}"/>
 
                                 <Button Content="OPEN"
                                         Grid.RowSpan="2"
