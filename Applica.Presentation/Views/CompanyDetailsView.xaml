@@ -107,7 +107,7 @@
                                 HorizontalAlignment="Right"
                                 ToolTip="Add new contact person"
                                 Command="{Binding AddNewContactPersonCommand}"/>
-                        <Button Content="{fa:Icon Minus}"
+                        <Button Content="{fa:Icon TrashAlt}"
                                 HorizontalAlignment="Right"
                                 Command="{Binding DeleteContactPersonCommand}"
                                 CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedContactPerson}"
@@ -194,7 +194,7 @@
                                 HorizontalAlignment="Right"
                                 ToolTip="Add new activity"
                                 Command="{Binding AddNewActivityCommand}"/>
-                        <Button Content="{fa:Icon Minus}"
+                        <Button Content="{fa:Icon TrashAlt}"
                                 HorizontalAlignment="Right"
                                 Command="{Binding DeleteActivityCommand}"
                                 CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedActivity}"
@@ -298,7 +298,7 @@
                                     Command="{Binding SaveCategoryCommand}"
                                     Margin="5 0 5 0"
                                     ToolTip="Save category"/>
-                            <Button Content="{fa:Icon Minus}"
+                            <Button Content="{fa:Icon TrashAlt}"
                                     Command="{Binding DeleteCategoryCommand}"
                                     Margin="0 0 5 0"
                                     ToolTip="Delete category"/>
@@ -338,7 +338,7 @@
                                 HorizontalAlignment="Right"
                                 ToolTip="Add new comment"
                                 Command="{Binding AddNewCommentCommand}"/>
-                        <Button Content="{fa:Icon Minus}"
+                        <Button Content="{fa:Icon TrashAlt}"
                                 HorizontalAlignment="Right"
                                 Command="{Binding DeleteCommentCommand}"
                                 CommandParameter="{Binding CompaniesViewModel.SelectedCompany.SelectedComment}"

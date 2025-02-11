@@ -57,7 +57,7 @@
                             ToolTip="Add new company"
                             Command="{Binding NewCompanyCommand}"/>
                     <Button VerticalAlignment="Center"
-                            Content="{fa:Icon Minus}"
+                            Content="{fa:Icon TrashAlt}"
                             FontSize="20"
                             ToolTip="Delete company"
                             Command="{Binding DeleteCompanyCommand}"
