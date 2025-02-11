@@ -95,18 +95,22 @@ public class CompanyService
         {
             var existingCompany = await context.Companies.FindAsync(company.Id);
 
-            if (existingCompany is not null)
+            if(existingCompany is null)
             {
-                var mapped = MapToEntity(company);
-
-                existingCompany.Name = mapped.Name;
-                existingCompany.Url = mapped.Url;
-                existingCompany.Comments = mapped.Comments;
-                existingCompany.Activities = mapped.Activities;
-                existingCompany.ContactPeople = mapped.ContactPeople;
-
-                await context.SaveChangesAsync();
+                await AddAsync(company);
+                return;
             }
+
+            var mapped = MapToEntity(company);
+
+            existingCompany.Name = mapped.Name;
+            existingCompany.Url = mapped.Url;
+            existingCompany.Comments = mapped.Comments;
+            existingCompany.Activities = mapped.Activities;
+            existingCompany.ContactPeople = mapped.ContactPeople;
+
+            await context.SaveChangesAsync();
+            
         }
     }
 
