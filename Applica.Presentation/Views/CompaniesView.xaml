@@ -68,7 +68,9 @@
 
                 <ListView Grid.Row="1"
                           ItemsSource="{Binding Companies}"
-                          SelectedItem="{Binding SelectedCompany}">
+                          SelectedItem="{Binding SelectedCompany}"
+                          MouseDoubleClick="ListViewItem_MouseDoubleClick">
+      
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -120,18 +122,13 @@
                                     RelativeSource={RelativeSource AncestorType=UserControl}}">
                                     <Button.Visibility>
                                         <MultiBinding Converter="{StaticResource SelectedItemToVisibilityConverter}">
-                                
+
                                             <Binding Path="." />
-                                   
+
                                             <Binding Path="DataContext.SelectedCompany" RelativeSource="{RelativeSource AncestorType=UserControl}" />
                                         </MultiBinding>
                                     </Button.Visibility>
                                 </Button>
-
-                                <!--<Border Height="1" 
-                                        Grid.Row="2"
-                                        BorderBrush="{StaticResource secondaryText}" 
-                                        BorderThickness="0.3"/>-->
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

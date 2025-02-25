@@ -149,6 +149,8 @@ namespace Applica.Presentation.ViewModels
             {
                 await companyService.UpdateAsync(CompaniesViewModel.SelectedCompany);
             }
+
+            CompaniesViewModel.SelectedCompany = null;
             
             MainViewModel.SelectedViewModel = CompaniesViewModel;
             await MainViewModel.CompaniesViewModel.LoadAllCompaniesAsync();
